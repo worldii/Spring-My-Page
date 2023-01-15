@@ -19,12 +19,15 @@ public class User {
 	@Column(name="user_id")
 	private Long id;
 
+
 	private String userName;
+	private String nickName;
 	private String email;
 
 	@Builder
-	public User (String userName, String email){
+	public User (String userName, String email, String nickName){
 		this.userName= userName;
+		this.nickName = nickName;
 		this.email = email;
 	}
 }

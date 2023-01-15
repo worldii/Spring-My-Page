@@ -37,6 +37,10 @@ public class Comment {
 	@JoinColumn(name="post_id")
 	private Post post;
 
+	public void updateDescription(String description){
+		this.description = description;
+	}
+
 	@Builder
 	public Comment(String description, Post post){
 		this.description =description;

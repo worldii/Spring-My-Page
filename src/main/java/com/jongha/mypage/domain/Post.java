@@ -44,6 +44,10 @@ public class Post {
 	@OneToMany(mappedBy = "post")
 	private List<Comment> comments = new ArrayList<>();
 
+	public void updateDescription(String description){
+		this.description = description;
+	}
+
 	@Builder
 	public Post(String title, String description, User user){
 		this.title = title;
