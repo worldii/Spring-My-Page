@@ -20,14 +20,14 @@ public class User {
 	private Long id;
 
 
-	private String userName;
-	private String nickName;
-	private String email;
+	private String loginId;
+	private String password;
+	private String name;
 
 	@Builder
-	public User (String userName, String email, String nickName){
-		this.userName= userName;
-		this.nickName = nickName;
-		this.email = email;
+	public User (String loginId, String password, String name){
+		this.loginId= loginId;
+		this.password = password;
+		this.name = name;
 	}
 }

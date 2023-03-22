@@ -10,9 +10,9 @@ spring:
       format_sql : true
 
   datasource:
-    url: jdbc:mysql://localhost:3306/my_page?characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/jongha?characterEncoding=UTF-8&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: jongha_page
+    username: jongha
     password: Whdgk13579!
 
 
