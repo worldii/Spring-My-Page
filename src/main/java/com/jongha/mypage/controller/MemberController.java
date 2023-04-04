@@ -1,15 +1,19 @@
 package com.jongha.mypage.controller;
 
 import com.jongha.mypage.domain.Member;
+import com.jongha.mypage.dto.MemberDto;
 import org.springframework.stereotype.Controller;
 
 import com.jongha.mypage.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -19,7 +23,6 @@ public class MemberController {
 
     @GetMapping("/login")
     public String login(){
-        System.out.println("dad");
         return "members/memberLoginForm";
     }
 
@@ -30,8 +33,21 @@ public class MemberController {
 
 
     @PostMapping("/join")
-    public String createMember(@ModelAttribute Member member){
-        memberService.join(member);
-        return "members/memberSaved";
+    public String createMember(@ModelAttribute MemberDto member){
+        memberService.joinUser(member);
+        return "redirect:/";
+    }
+
+    @GetMapping("/loginResult")
+    public String loginResult() {
+        return "members/memberLoginResult";
+    }
+
+
+    @GetMapping("/memberList")
+    public  String findAllMember(Model model) {
+        List<Member> memberList = memberService.findAll();
+        model.addAttribute("members",memberList);
+        return  "members/memberList";
     }
 }

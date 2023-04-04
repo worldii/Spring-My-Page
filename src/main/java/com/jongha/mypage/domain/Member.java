@@ -4,22 +4,22 @@ import javax.persistence.*;
 
 import com.jongha.mypage.dto.Role;
 import com.sun.istack.NotNull;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.io.Serializable;
 
 @Entity
 @Getter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseTimeEntity implements Serializable {
 	@Id
 	@GeneratedValue
-	@Column(name="user_id")
+	@Column(name="member_id")
 	private Long id;
 
 	@NotNull
-	private String userName;
+	private String username;
 	@NotNull
 	private String password;
 	@NotNull
@@ -30,8 +30,8 @@ public class Member {
 	private Role role;
 
 	@Builder
-	public Member(String userName, String password, String name, Role role){
-		this.userName= userName;
+	public Member(String username, String password, String name, Role role){
+		this.username= username;
 		this.password = password;
 		this.name = name;
 		this.role = role;
@@ -40,7 +40,7 @@ public class Member {
 	public void updateName (String name) {
 		this.name = name;
 	}
-	public void updateUsername(String userName) {
-		this.userName =userName;
+	public void updateUsername(String username) {
+		this.username =username;
 	}
 }

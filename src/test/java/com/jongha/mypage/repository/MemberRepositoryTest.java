@@ -36,7 +36,7 @@ class MemberRepositoryTest {
     public void 회원가입_성공() {
 
         // given
-        Member user = Member.builder().userName("jongha").password("1234").name("박종하").role(Role.USER).build();
+        Member user = Member.builder().username("jongha").password("1234").name("박종하").role(Role.USER).build();
 
         // when
         Member saveUser = userRepository.save(user);
