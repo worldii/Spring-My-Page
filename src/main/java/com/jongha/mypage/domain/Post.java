@@ -24,33 +24,37 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post {
-	@Id
-	@GeneratedValue
-	@Column(name="post_id")
-	private Long id;
+    @Id
+    @GeneratedValue
+    @Column(name = "post_id")
+    private Long id;
 
-	private String title;
-	private String description;
+    private String title;
+    private String description;
+    private String createdBy;
+    private Long countVisit;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private Member user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-	@CreationTimestamp
-	@Column(name="created_at")
-	private LocalDateTime createdAt =LocalDateTime.now();
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-	@OneToMany(mappedBy = "post")
-	private List<Comment> comments = new ArrayList<>();
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments = new ArrayList<>();
 
-	public void updateDescription(String description){
-		this.description = description;
-	}
+    public void updateDescription(String description) {
+        this.description = description;
+    }
 
-	@Builder
-	public Post(String title, String description, Member user){
-		this.title = title;
-		this.description = description;
-		this.user = user;
-	}
+    @Builder
+    public Post(String title, String description, Member member, String createdBy, Long countVisit) {
+        this.title = title;
+        this.description = description;
+        this.member = member;
+        this.createdBy = createdBy;
+        this.countVisit = countVisit;
+    }
 }

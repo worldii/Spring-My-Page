@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +36,7 @@ public class MemberService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Member findName = memberRepository.findByUsername(username).orElseThrow(()->new RuntimeException("등록한 회원이없습니다"));
+        Member findName = memberRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("등록한 회원이없습니다"));
         List<GrantedAuthority> authorities = new ArrayList<>();
         if (("admin").equals(username)) {
             authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
@@ -48,6 +47,6 @@ public class MemberService implements UserDetailsService {
     }
 
     public List<Member> findAll() {
-       return memberRepository.findAll();
+        return memberRepository.findAll();
     }
 }
