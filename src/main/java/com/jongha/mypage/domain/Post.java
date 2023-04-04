@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnJava;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -35,7 +34,7 @@ public class Post {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
-	private User user;
+	private Member user;
 
 	@CreationTimestamp
 	@Column(name="created_at")
@@ -49,7 +48,7 @@ public class Post {
 	}
 
 	@Builder
-	public Post(String title, String description, User user){
+	public Post(String title, String description, Member user){
 		this.title = title;
 		this.description = description;
 		this.user = user;

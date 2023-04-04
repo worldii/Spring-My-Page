@@ -12,14 +12,14 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class Member {
 	@Id
 	@GeneratedValue
 	@Column(name="user_id")
 	private Long id;
 
 	@NotNull
-	private String loginId;
+	private String userName;
 	@NotNull
 	private String password;
 	@NotNull
@@ -30,8 +30,8 @@ public class User {
 	private Role role;
 
 	@Builder
-	public User (String loginId, String password, String name, Role role){
-		this.loginId= loginId;
+	public Member(String userName, String password, String name, Role role){
+		this.userName= userName;
 		this.password = password;
 		this.name = name;
 		this.role = role;
@@ -40,7 +40,7 @@ public class User {
 	public void updateName (String name) {
 		this.name = name;
 	}
-	public void updateLoginId(String loginId) {
-		this.loginId =loginId;
+	public void updateUsername(String userName) {
+		this.userName =userName;
 	}
 }

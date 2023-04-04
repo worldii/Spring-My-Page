@@ -1,6 +1,6 @@
 package com.jongha.mypage.repository;
 
-import com.jongha.mypage.domain.User;
+import com.jongha.mypage.domain.Member;
 import com.jongha.mypage.dto.Role;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -15,10 +15,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
-class UserRepositoryTest {
+class MemberRepositoryTest {
 
     @Autowired
-    UserRepository userRepository;
+    MemberRepository userRepository;
     @Autowired
     EntityManager em;
 
@@ -36,14 +36,14 @@ class UserRepositoryTest {
     public void 회원가입_성공() {
 
         // given
-        User user = User.builder().loginId("jongha").password("1234").name("박종하").role(Role.USER).build();
+        Member user = Member.builder().userName("jongha").password("1234").name("박종하").role(Role.USER).build();
 
         // when
-        User saveUser = userRepository.save(user);
+        Member saveUser = userRepository.save(user);
 
         // then
-        User findUser = userRepository.findById(saveUser.getId()).orElseThrow(()-> new RuntimeException("저장된 회원이 없다. "));
-        assertThat(findUser).isSameAs(saveUser);
+        Member findMember = userRepository.findById(saveUser.getId()).orElseThrow(()-> new RuntimeException("저장된 회원이 없다. "));
+        assertThat(findMember).isSameAs(saveUser);
     }
 
 
