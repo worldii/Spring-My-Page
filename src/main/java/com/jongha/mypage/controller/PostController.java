@@ -22,58 +22,57 @@ import java.awt.print.Pageable;
 @RequiredArgsConstructor
 @RequestMapping("/post")
 public class PostController {
-	private final PostService postService;
+    private final PostService postService;
 
-	@GetMapping("/postForm")
-	public String addPost() {
-		return "/post/postForm";
-	}
+    @GetMapping("/postForm")
+    public String addPost() {
+        return "/post/postForm";
+    }
 
-	@PostMapping("/postForm")
-	String createPostPage( @ModelAttribute PostDto postDto, Model model){
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		UserDetails userDetails = (UserDetails) principal;
-		String username = userDetails.getUsername();
-		PostDto build = PostDto.builder().createdBy(username).countVisit(1L).build();
-		Long postId = postService.createPost(build);
-		log.info("Post 생성 :" + postId);
+    @PostMapping("/postForm")
+    String createPostPage(@ModelAttribute PostDto postDto, Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String username = userDetails.getUsername();
+        PostDto build = PostDto.builder().createdBy(username).countVisit(1L).build();
+        Long postId = postService.createPost(build);
+        log.info("Post 생성 :" + postId);
 
-		return "redirect:/";
-	}
+        return "redirect:/";
+    }
 
-	@GetMapping("/postList")
-	public String postList(Model model, @PageableDefault(size=10)Pageable pageable, @RequestParam(required = false, defaultValue = "") String searchText) {
+    @GetMapping("/postList")
+    public String postList(Model model, @PageableDefault(size = 10) Pageable pageable, @RequestParam(required = false, defaultValue = "") String searchText) {
 
-		Page<Post> posts = postService.getPage();
-		int startPage = Math.max(1, posts.getPageable().getPageNumber() - 1);
-		int endPage = Math.min(posts.getTotalPages(), posts.getPageable().getPageNumber() + 3);
+        Page<Post> posts = postService.getPage();
+        int startPage = Math.max(1, posts.getPageable().getPageNumber() - 1);
+        int endPage = Math.min(posts.getTotalPages(), posts.getPageable().getPageNumber() + 3);
 
-		model.addAttribute("posts", posts);
-		model.addAttribute("startPage", startPage);
-		model.addAttribute("endPage", endPage);
+        model.addAttribute("posts", posts);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
-		return "post/postList";
-	}
+        return "post/postList";
+    }
 
-	@GetMapping("/{postId}")
-	public String showPostPage(@PathVariable Long postId , Model model){
-		Post post = postService.showOnePost(postId);
-		model.addAttribute("post", post);
-		return "post/postContent";
-	}
+    @GetMapping("/{postId}")
+    public String showPostPage(@PathVariable Long postId, Model model) {
+        Post post = postService.showOnePost(postId);
+        model.addAttribute("post", post);
+        return "post/postContent";
+    }
 
-	@PutMapping("/{postId}")
-	public String updatePostPage(@PathVariable Long postId, PostDto postDto){
-		postService.updatePost(postId, postDto);
-		return null;
-	}
+    @PutMapping("/{postId}")
+    public String updatePostPage(@PathVariable Long postId, PostDto postDto) {
+        postService.updatePost(postId, postDto);
+        return null;
+    }
 
-	@DeleteMapping("/{postId}")
-	public String deletePostPage(@PathVariable Long postId){
-		postService.deletePost(postId);
-		return null;
-	}
-
+    @DeleteMapping("/{postId}")
+    public String deletePostPage(@PathVariable Long postId) {
+        postService.deletePost(postId);
+        return null;
+    }
 
 
 }
