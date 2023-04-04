@@ -1,5 +1,6 @@
 package com.jongha.mypage.service;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.jongha.mypage.domain.Post;
@@ -31,8 +32,11 @@ public class PostService {
     }
 
 
-
     public Post showOnePost(Long postId) {
         return postRepository.findById(postId).orElseThrow(RuntimeException::new);
+    }
+
+    public Page<Post> getPage() {
+        return null;
     }
 }
