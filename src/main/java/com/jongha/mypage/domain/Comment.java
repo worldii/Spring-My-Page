@@ -11,34 +11,46 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comment {
-	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@Column(name="comment_id")
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "comment_id")
+    private Long id;
 
-	@CreationTimestamp
-	@Column(name="created_at")
-	private LocalDateTime createdAt =LocalDateTime.now();
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-	private String description;
+    @LastModifiedDate
+    @Column(name = "modified_date")
+    private LocalDateTime modifiedDate = LocalDateTime.now();
 
-	@ManyToOne(fetch =  FetchType.LAZY)
-	@JoinColumn(name="post_id")
-	private Post post;
+    private String content;
 
-	public void updateDescription(String description){
-		this.description = description;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
 
-	@Builder
-	public Comment(String description, Post post){
-		this.description =description;
-		this.post = post;
-	}
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
+
+
+    @Builder
+    public Comment(String content, Member member, Post post) {
+        this.content = content;
+        this.post = post;
+        this.member = member;
+    }
 
 }

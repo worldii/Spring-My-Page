@@ -24,7 +24,7 @@ public class CommentService {
 
     public Long createComment(Long postId, CommentDto commentDto) {
         Post post = postRepository.findById(postId).orElseThrow(RuntimeException::new);
-        Comment comme = Comment.builder().post(post).description(commentDto.getDescription()).build();
+        Comment comme = Comment.builder().post(post).content(commentDto.getContent()).build();
         return comme.getId();
     }
 
@@ -34,7 +34,7 @@ public class CommentService {
 
     public void updateComment(Long commentId, CommentDto commentDto) {
         Comment comment = commentRepository.findById(commentId).orElseThrow(RuntimeException::new);
-        comment.updateDescription(comment.getDescription());
+        comment.updateContent(comment.getContent());
     }
 
     public void deleteAllComments(Long postId) {
