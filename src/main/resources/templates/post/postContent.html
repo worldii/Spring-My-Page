@@ -77,7 +77,11 @@
                     <dd th:text="${post.description}"></dd>
                 </dl>
             </div>
-            <button class="btn btn-primary" th:onclick="|location.href='@{/post/edit/{postId}(postId=${post.Id})}'|">수정</button>
+            <button class="btn btn-primary" th:onclick="|location.href='@{/post/edit/{postId}(postId=${post.id})}'|">수정</button>
+            <form action="postContent.html" th:action='@{/post/delete/{postId}(postId=${post.id})}' method="post">
+                <input type="hidden" name="_method" value="delete"/>
+                <button type="submit" class="btn btn-primary">삭제</button>
+            </form>
         </div>
     </div>
 </div>

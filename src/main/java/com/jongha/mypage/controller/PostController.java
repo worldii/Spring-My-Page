@@ -81,10 +81,11 @@ public class PostController {
         return "post/postContent";
     }
 
-    @DeleteMapping("/{postId}")
+    @DeleteMapping("/delete/{postId}")
     public String deletePostPage(@PathVariable Long postId) {
         postService.deletePost(postId);
-        return null;
+        log.info("Post : post 삭졔 " + postId);
+        return "redirect:/post/postList";
     }
 
 
