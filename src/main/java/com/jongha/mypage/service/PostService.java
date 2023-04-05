@@ -28,8 +28,8 @@ public class PostService {
     }
 
     @Transactional
-    public Page<Post> getPostList (Pageable pageable) {
-        return  postRepository.findAll(pageable);
+    public Page<Post> getPostList(Pageable pageable) {
+        return postRepository.findAll(pageable);
     }
 
     public Page<Post> paging(int page) {
@@ -37,10 +37,20 @@ public class PostService {
     }
 
 
+    @Transactional
+    public void updateVisit(Long id, PostDto postDto) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new RuntimeException("해당 게시글이 존재하지 않습니다."));
+        post.updateCountVisit(postDto.getCountVisit());
 
+        log.info("Post : update Count Visit");
+    }
+
+
+    @Transactional
     public void updatePost(Long postId, PostDto postDto) {
-        Post post = postRepository.findById(postId).orElseThrow(RuntimeException::new);
+        Post post = postRepository.findById(postId).orElseThrow(() -> new RuntimeException("해당 게시글이 존재하지 않습니다"));
         post.updateDescription(postDto.getDescription());
+        log.info("Post : update Description");
     }
 
     public void deletePost(Long postId) {
@@ -55,6 +65,6 @@ public class PostService {
 
     public Page<Post> getPage(String searchText, Pageable pageable) {
         Page<Post> posts = postRepository.findByTitleContainingOrDescriptionContaining(searchText, searchText, pageable);
-        return  posts;
+        return posts;
     }
 }

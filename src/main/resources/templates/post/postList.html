@@ -69,10 +69,12 @@
                 <div class="text-end">
                     <button type="button" class="btn btn-outline-light me-2"
                             th:onclick="|location.href='@{/members/login}'|"
-                    >Login</button>
+                    >Login
+                    </button>
                     <button type="button" class="btn btn-warning"
                             th:onclick="|location.href='@{/members/join}'|"
-                    >Sign-up</button>
+                    >Sign-up
+                    </button>
                 </div>
             </div>
         </div>
@@ -101,8 +103,9 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="post : ${posts}">
-            <td><a th:href="@{'/post/' + ${post.id}}"><span th:text="${post.id}"></span></a></td>
+        <tr th:each="post : ${posts}" th:onclick="|location.href='@{/post/postContent/{postId}(postId=${post.Id})}'|"
+        >
+            <td><span th:text="${post.id}"></span></td>
             <td th:text="${post.title}"></td>
             <td th:text="${post.createdBy}"></td>
             <td th:text="${post.description}"></td>

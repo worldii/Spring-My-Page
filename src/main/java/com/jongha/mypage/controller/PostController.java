@@ -55,10 +55,15 @@ public class PostController {
         return "post/postList";
     }
 
-    @GetMapping("/{postId}")
+    @GetMapping("/postContent/{postId}")
     public String showPostPage(@PathVariable Long postId, Model model) {
         Post post = postService.showOnePost(postId);
+        PostDto postDto = PostDto.builder().countVisit(post.getCountVisit() + 1L).build();
+
+        postService.updateVisit(post.getId(),postDto);
         model.addAttribute("post", post);
+        log.info("Post : post id 조회 ");
+
         return "post/postContent";
     }
 

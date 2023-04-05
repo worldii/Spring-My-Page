@@ -1,5 +1,6 @@
 package com.jongha.mypage.domain;
 
+import java.security.PublicKey;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,10 @@ public class Post {
 
     public void updateDescription(String description) {
         this.description = description;
+    }
+
+    public void updateCountVisit(Long countVisit) {
+        this.countVisit = countVisit;
     }
 
     @Builder
