@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title></title>
+    <title>게시판</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -53,7 +53,7 @@
                         onclick="moveLogin();">Login
                 </button>
                 <button type="button" class="btn btn-warning"
-                        th:onclick="|location.href='@{/members/login}'|"
+                        th:onclick="|location.href='@{/members/join}'|"
                         onclick="moveJoin();">Sign-up
                 </button>
             </div>
@@ -64,48 +64,20 @@
 <div class="container" style="margin-top:30px">
     <div class="row">
         <div class="col-sm-12">
-            <div class="form-group">
-                <h5 th:text="'제목 : ' + ${post.title}"></h5>
-            </div>
-            <div>
-                <td th:text="'작성자 : ' + ${post.createdBy}"></td>
-                <br><br>
-            </div>
-            <h5> 내용 </h5>
-            <div style="border:1px solid; padding:10px;">
-                <dl>
-                    <dd th:text="${post.description}"></dd>
-                </dl>
-            </div>
-            <button class="btn btn-primary" th:onclick="|location.href='@{/post/edit/{postId}(postId=${post.Id})}'|">수정</button>
+            <h2>글쓰기</h2>
+            <!--            enctype="multipart/form-data"-->
+            <form action="postEdit.html" th:action method="post">
+                <input type="hidden" name="_method" value="put">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="title" name="title" th:value="${post.title}">
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" rows="5" id="description" name="description"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">글수정</button>
+            </form>
         </div>
     </div>
-</div>
-<form action="postContent.html" th:action method="post">
-    <div class="comment-form" style="text-align: center;">
-        <div class="comment-form2" style="width:300px;height: 200px;display: inline-block">
-            <label for="content">댓글 달기</label>
-            <textarea class="form-control" id="content" name="content" rows="3"></textarea>
-            <button type="submit" class="btn btn-primary" onclick="window.location.reload()">작성</button>
-        </div>
-    </div>
-</form>
-<div class="container">
-    <table class="table table-hover">
-        <tr>
-            <th>번호</th>
-            <th>작성자</th>
-            <th>내용</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="comment : ${comments}">
-            <td th:text="${comment.id}"></td>
-            <td th:text="${comment.created_by}"></td>
-            <td th:text="${comment.content}"></td>
-        </tr>
-        </tbody>
-    </table>
 </div>
 </body>
 </html>

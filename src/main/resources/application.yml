@@ -14,6 +14,9 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: jongha
     password: Whdgk13579!
-
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 
 

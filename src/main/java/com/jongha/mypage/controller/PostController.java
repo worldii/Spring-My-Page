@@ -59,18 +59,26 @@ public class PostController {
     public String showPostPage(@PathVariable Long postId, Model model) {
         Post post = postService.showOnePost(postId);
         PostDto postDto = PostDto.builder().countVisit(post.getCountVisit() + 1L).build();
-
         postService.updateVisit(post.getId(),postDto);
         model.addAttribute("post", post);
         log.info("Post : post id 조회 ");
-
         return "post/postContent";
     }
 
-    @PutMapping("/{postId}")
-    public String updatePostPage(@PathVariable Long postId, PostDto postDto) {
+    @GetMapping("/edit/{postId}")
+    public String getUpdatePostPage(@PathVariable Long postId,Model model) {
+        Post post = postService.showOnePost(postId);
+        model.addAttribute("post", post);
+        return "post/postEdit";
+    }
+
+    @PutMapping("/edit/{postId}")
+    public String updatePostPage(@PathVariable Long postId, PostDto postDto,Model model) {
+        Post post = postService.showOnePost(postId);
+        log.info("Post : post 수정 ");
         postService.updatePost(postId, postDto);
-        return null;
+        model.addAttribute("post", post);
+        return "post/postContent";
     }
 
     @DeleteMapping("/{postId}")

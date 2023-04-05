@@ -24,6 +24,7 @@ public class PostService {
     @Transactional
     public Long createPost(PostDto postDto) {
         Post save = postRepository.save(postDto.toEntity());
+        log.info("description" + save.getDescription());
         return save.getId();
     }
 
@@ -35,7 +36,6 @@ public class PostService {
     public Page<Post> paging(int page) {
         return postRepository.findAll(PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "id")));
     }
-
 
     @Transactional
     public void updateVisit(Long id, PostDto postDto) {
@@ -49,6 +49,7 @@ public class PostService {
     @Transactional
     public void updatePost(Long postId, PostDto postDto) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new RuntimeException("해당 게시글이 존재하지 않습니다"));
+        post.updateTitle(postDto.getTitle());
         post.updateDescription(postDto.getDescription());
         log.info("Post : update Description");
     }
@@ -61,7 +62,6 @@ public class PostService {
     public Post showOnePost(Long postId) {
         return postRepository.findById(postId).orElseThrow(RuntimeException::new);
     }
-
 
     public Page<Post> getPage(String searchText, Pageable pageable) {
         Page<Post> posts = postRepository.findByTitleContainingOrDescriptionContaining(searchText, searchText, pageable);

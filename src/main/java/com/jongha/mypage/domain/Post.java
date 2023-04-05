@@ -62,4 +62,8 @@ public class Post {
         this.createdBy = createdBy;
         this.countVisit = countVisit;
     }
+
+    public void updateTitle(String title) {
+        this.title = title;
+    }
 }
