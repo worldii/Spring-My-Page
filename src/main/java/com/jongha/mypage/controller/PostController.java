@@ -2,6 +2,7 @@ package com.jongha.mypage.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +16,6 @@ import com.jongha.mypage.service.PostService;
 
 import lombok.RequiredArgsConstructor;
 
-import java.awt.print.Pageable;
 
 @Slf4j
 @Controller
@@ -34,24 +34,24 @@ public class PostController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String username = userDetails.getUsername();
-        PostDto build = PostDto.builder().createdBy(username).countVisit(1L).build();
-        Long postId = postService.createPost(build);
-        log.info("Post 생성 :" + postId);
+        log.info("UserName : "+ username);
 
-        return "redirect:/";
+        postDto.setCreatedBy(username);
+        postDto.setCountVisit(1L);
+        Long postId = postService.createPost(postDto);
+        log.info("Post 생성 :" + postId);
+        return "redirect:/post/postList";
     }
 
     @GetMapping("/postList")
     public String postList(Model model, @PageableDefault(size = 10) Pageable pageable, @RequestParam(required = false, defaultValue = "") String searchText) {
-
-        Page<Post> posts = postService.getPage();
+        Page<Post> posts = postService.getPage(searchText, pageable);
         int startPage = Math.max(1, posts.getPageable().getPageNumber() - 1);
         int endPage = Math.min(posts.getTotalPages(), posts.getPageable().getPageNumber() + 3);
 
         model.addAttribute("posts", posts);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-
         return "post/postList";
     }
 

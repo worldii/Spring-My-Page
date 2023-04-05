@@ -67,8 +67,12 @@
                 </form>
 
                 <div class="text-end">
-                    <button type="button" class="btn btn-outline-light me-2" onclick="moveLogin();">Login</button>
-                    <button type="button" class="btn btn-warning" onclick="moveJoin();">Sign-up</button>
+                    <button type="button" class="btn btn-outline-light me-2"
+                            th:onclick="|location.href='@{/members/login}'|"
+                    >Login</button>
+                    <button type="button" class="btn btn-warning"
+                            th:onclick="|location.href='@{/members/join}'|"
+                    >Sign-up</button>
                 </div>
             </div>
         </div>
@@ -79,7 +83,7 @@
 <div class="container">
     <table class="table table-hover">
         <h3>게시판</h3>
-        <form class="form-inline d-flex justify-content-end" method="GET" , th:action="@{/board/boardList}"
+        <form class="form-inline d-flex justify-content-end" method="GET" , th:action="@{/post/postList}"
               th:value="${param.searchText}">
             <div class="form-group mx-sm-3 mb-2 pull-right">
                 <label for="searchText" class="sr-only">검색</label>
@@ -97,32 +101,32 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="board : ${boards}">
-            <td><a th:href="@{'/board/boardContent/' + ${board.id}}"><span th:text="${board.id}"></span></a></td>
-            <td th:text="${board.title}"></td>
-            <td th:text="${board.createdBy}"></td>
-            <td th:text="${board.content}"></td>
-            <td th:text="${board.countVisit}"></td>
+        <tr th:each="post : ${posts}">
+            <td><a th:href="@{'/post/' + ${post.id}}"><span th:text="${post.id}"></span></a></td>
+            <td th:text="${post.title}"></td>
+            <td th:text="${post.createdBy}"></td>
+            <td th:text="${post.description}"></td>
+            <td th:text="${post.countVisit}"></td>
         </tr>
         </tbody>
     </table>
 
     <hr/>
-    <button type="button" class="btn btn-default pull-right" onclick="location.href='/board/boardForm'">글쓰기</button>
+    <button type="button" class="btn btn-default pull-right" onclick="location.href='/post/postForm'">글쓰기</button>
 
     <div class="center text-center">
         <nav aria-label="Page navigation example">
             <ul class="pagination justifiy-content-center" th:if="${totalPage != 0}">
                 <li class="page-item"><a class="page-link"
-                                         th:href="@{/board/boardList(page=${boards.pageable.pageNumber - 1}, searchText=${param.searchText})}">Previous</a>
+                                         th:href="@{/post/postList(page=${posts.pageable.pageNumber - 1}, searchText=${param.searchText})}">Previous</a>
                 </li>
-                <li class="" th:classappend="${page == boards.pageable.pageNumber + 1} ? 'disabled'"
+                <li class="" th:classappend="${page == posts.pageable.pageNumber + 1} ? 'disabled'"
                     th:each="page : ${#numbers.sequence(startPage, endPage)}">
-                    <a th:href="@{/board/boardList(page=${page - 1}, searchText=${param.searchText})}"
+                    <a th:href="@{/post/postList(page=${page - 1}, searchText=${param.searchText})}"
                        th:text="${page}"></a>
                 </li>
                 <li class="page-item"><a class="page-link"
-                                         th:href="@{/board/boardList(page=${boards.pageable.pageNumber + 1}, searchText=${param.searchText})}">Next</a>
+                                         th:href="@{/post/postList(page=${posts.pageable.pageNumber + 1}, searchText=${param.searchText})}">Next</a>
                 </li>
             </ul>
         </nav>
