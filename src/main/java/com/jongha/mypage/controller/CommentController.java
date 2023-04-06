@@ -1,5 +1,10 @@
 package com.jongha.mypage.controller;
 
+import com.jongha.mypage.service.PostService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -7,38 +12,42 @@ import org.springframework.web.bind.annotation.*;
 import com.jongha.mypage.domain.Comment;
 import com.jongha.mypage.dto.CommentDto;
 import com.jongha.mypage.service.CommentService;
-
 import lombok.RequiredArgsConstructor;
 
-@RestController
+@Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/comment")
+@Controller
 public class CommentController {
-	private final CommentService commentService;
+    private final CommentService commentService;
 
-	@GetMapping("/comment/{postId}")
-	String showPostPage(@PathVariable Long commentId , Model model){
-		Comment comment = commentService.showOneComment(commentId);
-		model.addAttribute("comment", comment);
-		return null;
-	}
+    @GetMapping("/comment/{postId}")
+    String showPostPage(@PathVariable Long postId, Model model) {
+        Comment comment = commentService.showOneComment(postId);
+        model.addAttribute("comment", comment);
+        return null;
+    }
 
-	@PostMapping("/create/{postId}")
-	String createCommentPage(@PathVariable Long postId, @RequestBody CommentDto commentDto){
-		commentService.createComment(postId, commentDto);
-		return null;
-	}
+    @PostMapping("/comment/create/{postId}")
+    public String createCommentPage(@PathVariable("postId") Long postId, @ModelAttribute CommentDto commentDto) {
+        log.info("Comment : 댓글 달기 ");
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String username = userDetails.getUsername();
+        commentService.createComment(username, postId, commentDto);
 
-	@PutMapping("/post/{postId}/comment/{commentId}")
-	String updateCommentPage(@PathVariable Long commentId, CommentDto commentDto){
-		commentService.updateComment(commentId, commentDto);
-		return null;
-	}
+        return "redirect:/post/postContent/{postId}";
+    }
 
-	@DeleteMapping("/post/{postId}/comment/{commentId}")
-	String deleteCommentPage(@PathVariable Long commentId){
-		commentService.deleteComment(commentId);
-		return null;
-	}
+//	@PutMapping("/post/{postId}/comment/{commentId}")
+//	String updateCommentPage(@PathVariable Long commentId, CommentDto commentDto){
+//		commentService.updateComment(commentId, commentDto);
+//		return null;
+//	}
+//
+//	@DeleteMapping("/post/{postId}/comment/{commentId}")
+//	String deleteCommentPage(@PathVariable Long commentId){
+//		commentService.deleteComment(commentId);
+//		return null;
+//	}
 
 }

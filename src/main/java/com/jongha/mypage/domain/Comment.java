@@ -31,6 +31,7 @@ public class Comment {
     private LocalDateTime modifiedDate = LocalDateTime.now();
 
     private String content;
+    private String createdBy;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
@@ -47,10 +48,11 @@ public class Comment {
 
 
     @Builder
-    public Comment(String content, Member member, Post post) {
+    public Comment(String content, Member member, Post post, String createdBy) {
         this.content = content;
         this.post = post;
         this.member = member;
+        this.createdBy = createdBy;
     }
 
 }

@@ -1,5 +1,7 @@
 package com.jongha.mypage.controller;
 
+import com.jongha.mypage.domain.Member;
+import com.jongha.mypage.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +26,8 @@ import lombok.RequiredArgsConstructor;
 public class PostController {
     private final PostService postService;
 
+    private final MemberService memberService;
+
     @GetMapping("/postForm")
     public String addPost() {
         return "/post/postForm";
@@ -34,10 +38,13 @@ public class PostController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String username = userDetails.getUsername();
-        log.info("UserName : "+ username);
+        log.info("UserName : " + username);
 
+        Member byUserName = memberService.findByUserName(username);
+        postDto.setMember(byUserName);
         postDto.setCreatedBy(username);
         postDto.setCountVisit(1L);
+
         Long postId = postService.createPost(postDto);
         log.info("Post 생성 :" + postId);
         return "redirect:/post/postList";
@@ -59,21 +66,23 @@ public class PostController {
     public String showPostPage(@PathVariable Long postId, Model model) {
         Post post = postService.showOnePost(postId);
         PostDto postDto = PostDto.builder().countVisit(post.getCountVisit() + 1L).build();
-        postService.updateVisit(post.getId(),postDto);
+        postService.updateVisit(post.getId(), postDto);
         model.addAttribute("post", post);
+        model.addAttribute("comments", post.getComments());
         log.info("Post : post id 조회 ");
+        log.info("comment " + post.getComments().size());
         return "post/postContent";
     }
 
     @GetMapping("/edit/{postId}")
-    public String getUpdatePostPage(@PathVariable Long postId,Model model) {
+    public String getUpdatePostPage(@PathVariable Long postId, Model model) {
         Post post = postService.showOnePost(postId);
         model.addAttribute("post", post);
         return "post/postEdit";
     }
 
     @PutMapping("/edit/{postId}")
-    public String updatePostPage(@PathVariable Long postId, PostDto postDto,Model model) {
+    public String updatePostPage(@PathVariable Long postId, PostDto postDto, Model model) {
         Post post = postService.showOnePost(postId);
         log.info("Post : post 수정 ");
         postService.updatePost(postId, postDto);

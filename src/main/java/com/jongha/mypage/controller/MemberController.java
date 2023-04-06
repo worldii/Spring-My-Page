@@ -22,7 +22,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "members/memberLoginForm";
     }
 
@@ -33,7 +33,7 @@ public class MemberController {
 
 
     @PostMapping("/join")
-    public String createMember(@ModelAttribute MemberDto member){
+    public String createMember(@ModelAttribute MemberDto member) {
         memberService.joinUser(member);
         return "redirect:/";
     }
@@ -45,9 +45,9 @@ public class MemberController {
 
 
     @GetMapping("/memberList")
-    public  String findAllMember(Model model) {
+    public String findAllMember(Model model) {
         List<Member> memberList = memberService.findAll();
-        model.addAttribute("members",memberList);
-        return  "members/memberList";
+        model.addAttribute("members", memberList);
+        return "members/memberList";
     }
 }
