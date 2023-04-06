@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.jongha.mypage.domain.Post;
 
 @Repository
-public interface PostRepository extends JpaRepository <Post,Long> {
+public interface PostRepository extends JpaRepository<Post, Long> {
     Page<Post> findByTitleContainingOrDescriptionContaining(String searchText, String searchText1, Pageable pageable);
 }

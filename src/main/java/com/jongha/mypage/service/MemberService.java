@@ -53,6 +53,6 @@ public class MemberService implements UserDetailsService {
     public Member findByUserName(String username) {
         Member member = memberRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("등록된 회원이 없습니다."));
 
-        return  member;
+        return member;
     }
 }

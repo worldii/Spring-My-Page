@@ -9,25 +9,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MemberDto {
 
-	private Long id;
-	private String username;
-	private String password;
-	private String name;
+    private Long id;
+    private String username;
+    private String password;
+    private String name;
 
 
-	@Builder
-	public MemberDto(String username, String password, String name) {
-		this.username = username;
-		this.password = password;
-		this.name = name;
-	}
+    @Builder
+    public MemberDto(String username, String password, String name) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+    }
 
-	public Member toEntity() {
-		return Member.builder()
-				.username(username)
-				.password(password)
-				.name(name)
-				.build();
+    public Member toEntity() {
+        return Member.builder()
+                .username(username)
+                .password(password)
+                .name(name)
+                .build();
 
-	}
+    }
 }

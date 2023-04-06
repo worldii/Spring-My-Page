@@ -16,7 +16,7 @@ public class PostDto {
     private Member member;
 
     @Builder
-    public PostDto(String title, String description, String createdBy, Long countVisit,Member member) {
+    public PostDto(String title, String description, String createdBy, Long countVisit, Member member) {
         this.title = title;
         this.description = description;
         this.createdBy = createdBy;

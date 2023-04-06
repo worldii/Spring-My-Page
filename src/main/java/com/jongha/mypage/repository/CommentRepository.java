@@ -9,5 +9,5 @@ import com.jongha.mypage.domain.Comment;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-	List<Comment> findAllByPostId(Long postId);
+    List<Comment> findAllByPostId(Long postId);
 }

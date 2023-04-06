@@ -41,7 +41,6 @@ public class PostService {
     public void updateVisit(Long id, PostDto postDto) {
         Post post = postRepository.findById(id).orElseThrow(() -> new RuntimeException("해당 게시글이 존재하지 않습니다."));
         post.updateCountVisit(postDto.getCountVisit());
-
         log.info("Post : update Count Visit");
     }
 

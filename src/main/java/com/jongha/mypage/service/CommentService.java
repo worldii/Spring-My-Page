@@ -14,7 +14,6 @@ import com.jongha.mypage.repository.PostRepository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RestController;
 
 @Service
 @Transactional
