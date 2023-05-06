@@ -1,5 +1,6 @@
 # 백엔드 개인 프로젝트
-
+## 설명
+SpringBoot, JPA, thymeleaf 를 통한 개인 게시판 구축
 ## 기능 구현
 
 - [x] User
@@ -24,6 +25,6 @@
 - [ ] TDD
 
 ## 기술 스택
-Spring Boot, Spring JPA, MySql, Thymeleaf
+Spring Boot, Spring JPA, MySql, Thymeleaf , + Spring Security 추가 예정. 
 
 
